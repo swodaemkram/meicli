@@ -26,27 +26,30 @@ int main(int argc, char *argv[]) {
 	int res;
 	int sock = socket(AF_UNIX, SOCK_STREAM, 0);
 	char out_buff[250] = {0};
+	char domainsocket_Name[250] = {0};
 	system("clear");
 	printf("Connecting please stand by ...\n");
 	struct sockaddr_un address;
 
-if(strlen(argv[1])<= 4)
+if(strlen(argv[2])<= 3)
 {
 	help();
 }
-
-strcpy(out_buff,argv[1]);
 
 if(strcmp(out_buff,"help") == 0)
 {
 	help();
 }
 
+strcpy(domainsocket_Name,argv[1]);
+strcpy(out_buff,argv[2]);
+
 do
 {
 	memset(&address, 0x00, sizeof(address));
 	address.sun_family = AF_UNIX;
-	strncpy(address.sun_path, "mei_command.sock", strlen("mei_command.sock"));
+	//printf("Connecting to %s to send command %s \n",domainsocket_Name,out_buff);//DEBUG
+	strncpy(address.sun_path, domainsocket_Name, strlen(domainsocket_Name));
 	res = connect(sock, (struct sockaddr *)&address, sizeof(address));
 	//printf("connect = %d\n",res);//DEBUG
 	usleep(100000);
@@ -70,9 +73,10 @@ void help(void)
 
 {
 	printf("\033[1;32m=========================================\n");
-	printf("\033[1;33m           meicli ver 1.0.1\n");
+	printf("\033[1;33m           meicli ver 1.2.1\n");
 	printf("\033[1;34m            By Mark Meadows \n");
 	printf("\033[1;31m(c)Copyright 2019 Fireking Security Group\n");
+	printf("\033[1;31m           Multi-process compliant   \n");
 	printf("\033[1;32m=========================================\n\033[0m");
 	printf("is a command line Domain Socket Connector\n");
 	printf("for the mei_service an API server for the\n");
@@ -88,7 +92,7 @@ void help(void)
 	printf("model\n");
 	printf("serial\n");
 	printf("varname\n\033[0m");
-	printf("[Usage: sudo meicli model]\n");
+	printf("[Usage: sudo ./meicli ./mei_command1.sock model]\n");
 exit(0);
 }
 
