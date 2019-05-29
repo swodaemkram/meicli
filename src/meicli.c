@@ -31,18 +31,21 @@ int main(int argc, char *argv[]) {
 	printf("Connecting please stand by ...\n");
 	struct sockaddr_un address;
 
-if(strlen(argv[2])<= 3)
+if(strlen(argv[1])<= 0)
 {
 	help();
 }
+
+strcpy(out_buff,argv[2]);
+
 
 if(strcmp(out_buff,"help") == 0)
 {
 	help();
 }
 
-strcpy(domainsocket_Name,argv[1]);
-strcpy(out_buff,argv[2]);
+//strcpy(domainsocket_Name,argv[1]);
+sprintf(domainsocket_Name,"/var/run/mei_command%s.socket",argv[1]);
 
 do
 {
