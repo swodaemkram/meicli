@@ -45,7 +45,7 @@ if(strcmp(out_buff,"help") == 0)
 }
 
 //strcpy(domainsocket_Name,argv[1]);
-sprintf(domainsocket_Name,"/var/run/mei_command%s.socket",argv[1]);
+sprintf(domainsocket_Name,"/var/run/mei_service%s.socket",argv[1]);
 
 do
 {
